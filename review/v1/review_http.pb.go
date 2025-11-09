@@ -33,9 +33,9 @@ type ReviewHTTPServer interface {
 
 func RegisterReviewHTTPServer(s *http.Server, srv ReviewHTTPServer) {
 	r := s.Route("/")
-	r.POST("v1/reviews", _Review_CreateReview0_HTTP_Handler(srv))
+	r.POST("/v1/reviews", _Review_CreateReview0_HTTP_Handler(srv))
 	r.GET("/v1/review/{reviewID}", _Review_GetReview0_HTTP_Handler(srv))
-	r.POST("v1/review/reply", _Review_ReplyReview0_HTTP_Handler(srv))
+	r.POST("/v1/review/reply", _Review_ReplyReview0_HTTP_Handler(srv))
 	r.GET("/v1/{userID}/reviews", _Review_ListReviewByUserID0_HTTP_Handler(srv))
 }
 
@@ -144,7 +144,7 @@ func NewReviewHTTPClient(client *http.Client) ReviewHTTPClient {
 
 func (c *ReviewHTTPClientImpl) CreateReview(ctx context.Context, in *CreateReviewRequest, opts ...http.CallOption) (*CreateReviewReply, error) {
 	var out CreateReviewReply
-	pattern := "v1/reviews"
+	pattern := "/v1/reviews"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationReviewCreateReview))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -183,7 +183,7 @@ func (c *ReviewHTTPClientImpl) ListReviewByUserID(ctx context.Context, in *ListR
 
 func (c *ReviewHTTPClientImpl) ReplyReview(ctx context.Context, in *ReplyReviewRequest, opts ...http.CallOption) (*ReplyReviewReply, error) {
 	var out ReplyReviewReply
-	pattern := "v1/review/reply"
+	pattern := "/v1/review/reply"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationReviewReplyReview))
 	opts = append(opts, http.PathTemplate(pattern))
